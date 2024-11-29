@@ -10,6 +10,6 @@ Package: rtl-ais
 Section: comm
 Priority: optional
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, librtlsdr0
+Depends: ${shlibs:Depends}, ${misc:Depends}, librtlsdr0, adduser (>= 3.11)
 Homepage: https://github.com/dgiardini/rtl-ais
 Description: AIS tuner and generic dual-frequency FM demodulator
