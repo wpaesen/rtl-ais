@@ -9,6 +9,7 @@ ExecStart=/usr/bin/rtl_ais -R on -n
 Restart=on-failure
 RestartSec=10
 KillMode=process
+WorkingDirectory=/var/lib/ais
 
 [Install]
 WantedBy=multi-user.target

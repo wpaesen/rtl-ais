@@ -1,3 +1,11 @@
+rtl-ais (0.3.ppa2) bionic; urgency=low
+
+    * add systemd service 
+    * automatically create ais user for running the service
+    * add udev rules 
+
+ -- wouter paesen <wouter@daemontech.be>  Fri, 29 Nov 2024 11:48:01 +0200
+
 rtl-ais (0.3.ppa1) bionic; urgency=low
 
     [ Frederic Guilbault ]

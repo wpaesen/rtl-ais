@@ -1,0 +1,46 @@
+#!/bin/bash
+
+case "$1" in
+  install|upgrade)
+
+  ADDGROUP="plugdev"
+
+  # create user to avoid running server as root
+  # 1. create group if not existing
+  if ! getent group | grep -q "^ais:" ; then
+     echo -n "Adding group ais.."
+     addgroup --quiet --system ais 2>/dev/null ||true
+     echo "..done"
+  fi
+  
+  # 2. create homedir if not existing
+  test -d /var/lib/ais || mkdir /var/lib/ais
+
+  # 3. create user if not existing
+  if ! getent passwd | grep -q "^ais:"; then
+    echo -n "Adding system user ais.."
+    adduser --quiet \
+            --system \
+            --ingroup ais \
+            --no-create-home \
+            --disabled-password \
+            ais 2>/dev/null || true
+    echo "..done"
+  fi
+  # 4. adjust passwd entry
+  usermod -c "rtl-ais service user" \
+          -d /var/lib/ais   \
+          -g ais  \
+             ais
+  # 5. adjust file and directory permissions
+  if ! dpkg-statoverride --list /var/lib/ais >/dev/null
+  then
+      chown -R ais:adm /var/lib/ais
+      chmod u=rwx,g=rxs,o= /var/lib/ais
+  fi
+  # 6. Add the user to the ADDGROUP group
+  if ! groups ais | cut -d: -f2 | grep -qw plugdev; then
+           adduser ais plugdev
+  fi
+  ;;
+esac
